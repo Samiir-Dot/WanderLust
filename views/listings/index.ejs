@@ -194,6 +194,32 @@
     box-shadow: none;
   }
 
+  /* === MOBILE FULL-WIDTH LISTING CARDS === */
+@media (max-width: 576px) {
+  .listing-card {
+    width: 100% !important;
+    max-width: none !important;
+    border-radius: 14px;
+    margin: 0 auto 1.5rem auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .listing-link {
+    display: block;
+    width: 100%;
+  }
+
+  .card-img-top {
+    border-radius: 14px 14px 0 0;
+    height: auto !important;
+  }
+
+  .row {
+    padding: 0 0.8rem !important; /* reduces excessive side spacing */
+  }
+}
+
+
 </style>
 
 <!-- FILTER BAR -->
@@ -275,7 +301,7 @@
 <!-- LISTINGS GRID -->
 <% if (allListings.length > 0) { %>
   <!-- LISTINGS GRID -->
-  <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
     <% for (list of allListings) { %>
       <a href="/listings/<%= list._id %>" class="listing-link">
         <div class="card col listing-card">

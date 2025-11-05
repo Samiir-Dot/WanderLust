@@ -374,15 +374,20 @@ hr {
   z-index: 1050; /* higher than your cards, footer, etc. */
 }
 
-.navbar-collapse {
-  position: relative;
-  z-index: 1100; /* ensures the dropdown menu appears above all */
-  background-color: #fff; /* optional: keeps it solid on scroll */
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
 
 .navbar-collapse {
   max-height: 80vh;   /* limits height */
   overflow-y: auto;   /* scrollable if many links */
+}
+
+
+.listing-card {
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
