@@ -324,4 +324,36 @@
       info.style.display = (info.style.display !== "inline") ? "inline" : "none";
     }
   });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.querySelector(".filters-wrapper");
+  const filters = document.querySelector("#filters");
+
+  if (!filters || !wrapper) return;
+
+  const updateFadeVisibility = () => {
+    const maxScroll = filters.scrollWidth - filters.clientWidth;
+    const scrollLeft = filters.scrollLeft;
+
+    // if near the left edge
+    const atStart = scrollLeft <= 5;
+    // if near the right edge
+    const atEnd = scrollLeft >= maxScroll - 5;
+
+    // right fade (disappears when fully right)
+    wrapper.style.setProperty("--scroll-indicator-opacity", atEnd ? "0" : "1");
+    // left fade (appears when scrolled right)
+    wrapper.style.setProperty("--left-fade-opacity", atStart ? "0" : "1");
+  };
+
+  // initial check
+  updateFadeVisibility();
+
+  // update on scroll or resize
+  filters.addEventListener("scroll", updateFadeVisibility);
+  window.addEventListener("resize", updateFadeVisibility);
+});
+
+  
 </script>
