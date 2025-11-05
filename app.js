@@ -95,6 +95,10 @@ app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 //random route
 app.use((req,res,next)=>{
     next(new ExpError(404,"Page Not Found!"));
