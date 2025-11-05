@@ -1,0 +1,327 @@
+
+<% layout("/layouts/boilerplate.ejs") %>
+
+<style>
+  /* GENERAL FIX — prevent unwanted side gap */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* FILTERS WRAPPER (keeps bar aligned with listings) */
+  .filters-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    margin-top: 0.5rem;
+  }
+
+  #filters {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 1.8rem;
+    padding: 0.8rem 1.5rem; /* adjusted padding to align with listing grid */
+    max-width: 1400px;
+    width: 100%;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  #filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* FILTERS */
+  .filter {
+    text-align: center;
+    opacity: 0.8;
+    flex: 0 0 auto;
+    cursor: pointer;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    transition: 0.2s ease;
+  }
+
+  .filter p {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+  }
+
+  /* TAX SWITCH */
+  .tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3rem;
+    padding: 0.5rem 1rem;
+    margin-left: 13rem;
+    display: flex;
+    /* align-items: center; */
+    flex-shrink: 0;
+    white-space: nowrap;
+    align-self: flex-start;
+  }
+
+  /* Align the switch better with icons */
+  .form-check-input {
+    cursor: pointer;
+  }
+
+  .form-check-label {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* TAX INFO TEXT (hidden by default) */
+  .taxInfo {
+    display: none;
+  }
+
+  /* LISTING GRID */
+  .row {
+    max-width: 1400px; /* wider layout to reduce big side margins */
+    margin: 1rem auto 2rem auto;
+    padding: 0 1.5rem; /* keeps listings aligned with filters */
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    #filters {
+      gap: 1rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .tax-toggle {
+      display: none;
+    }
+
+    .row {
+      padding: 0 1rem;
+    }
+  }
+
+  /* Highlight active filter */
+    .active-filter {
+    opacity: 1 !important;
+    border-bottom: 3px solid #fe424d;
+    padding-bottom: 0.4rem;
+    color: #fe424d;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    }
+
+    .filter {
+    text-decoration: none;
+    color: inherit;
+    }
+
+    .no-results img {
+      filter: grayscale(100%) brightness(1.2);
+      opacity: 0.85;
+    }
+
+    .no-results h4 {
+      color: #333;
+    }
+
+    .no-results p {
+      color: #666;
+    }
+
+    .no-results a:hover {
+      background-color: #fe424d;
+      color: #fff;
+      border-color: #fe424d;
+      transition: all 0.25s ease;
+    }
+
+    .no-results {
+      margin-top: 2rem;
+    }
+
+    /* .no-results img {
+      opacity: 0.8;
+      filter: grayscale(100%) brightness(1.15);
+    } */
+
+    .no-results img {
+      opacity: 0.95;
+      filter: brightness(1.05);
+      transition: all 0.3s ease;
+    }
+
+    .no-results img:hover {
+      filter: brightness(1.1);
+      transform: scale(1.03);
+    }
+
+    .no-results a:hover {
+      background-color: #fe424d;
+      color: white;
+      border-color: #fe424d;
+    }
+
+    /* 🌸 Small "Clear Filters" link near the results text */
+  .btn-filter-top {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fe424d !important;
+    border: 1.5px solid #fe424d !important;
+    border-radius: 20px !important;
+    padding: 0.25rem 0.8rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    background-color: transparent !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-filter-top:hover {
+    color: white !important;
+    background-color: #fe424d !important;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(254, 66, 77, 0.25);
+  }
+
+  .btn-filter-top:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+</style>
+
+<!-- FILTER BAR -->
+<div class="filters-wrapper">
+  <div id="filters">
+    <% const qSearch = search ? `&search=${encodeURIComponent(search)}` : ''; %>
+
+    <a href="/listings?category=Trending<%= qSearch %>" class="filter <%= category === 'Trending' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-fire"></i></div><p>Trending</p>
+    </a>
+
+    <a href="/listings?category=Rooms<%= qSearch %>" class="filter <%= category === 'Rooms' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-bed"></i></div><p>Rooms</p>
+    </a>
+
+    <a href="/listings?category=Iconic Cities<%= qSearch %>" class="filter <%= category === 'Iconic Cities' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-mountain-city"></i></div><p>Iconic Cities</p>
+    </a>
+
+    <a href="/listings?category=Amazing pools<%= qSearch %>" class="filter <%= category === 'Amazing pools' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-person-swimming"></i></div><p>Amazing pools</p>
+    </a>
+
+    <a href="/listings?category=Mountains<%= qSearch %>" class="filter <%= category === 'Mountains' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-mountain"></i></div><p>Mountains</p>
+    </a>
+
+    <a href="/listings?category=Castles<%= qSearch %>" class="filter <%= category === 'Castles' ? 'active-filter' : '' %>">
+      <div><i class="fa-brands fa-fort-awesome"></i></div><p>Castles</p>
+    </a>
+
+    <a href="/listings?category=Camping<%= qSearch %>" class="filter <%= category === 'Camping' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-campground"></i></div><p>Camping</p>
+    </a>
+
+    <a href="/listings?category=Farms<%= qSearch %>" class="filter <%= category === 'Farms' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-cow"></i></div><p>Farms</p>
+    </a>
+
+    <a href="/listings?category=Arctic<%= qSearch %>" class="filter <%= category === 'Arctic' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-snowflake"></i></div><p>Arctic</p>
+    </a>
+
+    <a href="/listings?category=Dome<%= qSearch %>" class="filter <%= category === 'Dome' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-igloo"></i></div><p>Dome</p>
+    </a>
+
+    <a href="/listings?category=Boats<%= qSearch %>" class="filter <%= category === 'Boats' ? 'active-filter' : '' %>">
+      <div><i class="fa-solid fa-ship"></i></div><p>Boats</p>
+    </a>
+
+    <!-- TAX SWITCH -->
+    <% if (allListings.length > 0) { %>
+      <div class="tax-toggle">
+        <div class="form-check-reverse form-switch">
+          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+          <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+
+<% if ((search || category) && allListings.length > 0) { %>
+  <p class="text-center mt-3">
+    <% if (search && category) { %>
+      Showing results for "<%= search %>" in "<%= category %>"
+    <% } else if (search) { %>
+      Showing results matching "<%= search %>"
+    <% } else if (category) { %>
+      Showing "<%= category %>" listings
+    <% } %>
+    <a href="/listings" class="btn-filter-top ms-2">Clear Filters</a>
+  </p>
+<% } %>
+
+
+<!-- LISTINGS GRID -->
+<% if (allListings.length > 0) { %>
+  <!-- LISTINGS GRID -->
+  <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
+    <% for (list of allListings) { %>
+      <a href="/listings/<%= list._id %>" class="listing-link">
+        <div class="card col listing-card">
+          <img src="<%= list.image.url %>" class="card-img-top" alt="listing_image" style="height:20rem">
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+            <p class="card-text">
+              <b><%= list.title %></b><br>
+              &#8377; <%= list.price.toLocaleString("en-IN") %> / night
+              &nbsp;&nbsp;<i class="taxInfo">+&#8377;<%= list.price * 0.18 %> GST</i>
+            </p>
+          </div>
+        </div>
+      </a>
+    <% } %>
+  </div>
+
+<% } else { %>
+
+  <!-- ✅ NO RESULTS FOUND CARD -->
+<div class="no-results d-flex flex-column align-items-center justify-content-center text-center py-5">
+  <img src="/images/noresults.png" alt="No Results" width="100" class="mb-4 opacity-75">
+  <h5 class="fw-semibold">No results found</h5>
+  <p class="text-muted mb-4">
+    <% if (search && category) { %>
+      No listings match your search for "<b><%= search %></b>" in category "<b><%= category %></b>".
+    <% } else if (search) { %>
+      No listings match your search for "<b><%= search %></b>".
+    <% } else { %>
+      We couldn’t find any listings right now.
+    <% } %>
+  </p>
+  <a href="/listings" class="btn btn-outline-dark rounded-pill px-4 py-2">
+    Clear filters and try again
+  </a>
+</div>
+
+
+<% } %>
+
+<script>
+  const taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  taxSwitch.addEventListener("click", () => {
+    const taxInfo = document.getElementsByClassName("taxInfo");
+    for (let info of taxInfo) {
+      info.style.display = (info.style.display !== "inline") ? "inline" : "none";
+    }
+  });
+</script>

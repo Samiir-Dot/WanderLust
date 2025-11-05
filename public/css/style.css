@@ -1,0 +1,348 @@
+body{
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  flex: 1;
+  margin: 0 auto !important; /* Centers it properly */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1200px; /* or 1320px to match Bootstrap’s xl container */
+}
+.container-fluid {
+  max-width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+
+input ,textarea{
+    /* border: .01rem solid #333 !important; */
+}
+.navbar{
+    height: 5rem;
+    background-color: white;
+    border: 1px solid #999 ;
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: black !important;
+}
+.f-info{
+    display: flex;
+    height: 6rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ebebeb;
+}
+.f-info-links a{
+    text-decoration: none;
+    color: #222222
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+.f-info-socials i{
+    margin-right: 1rem;
+}
+/* cards styling */
+.listing-card{
+    border: none !important;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text {
+    font-weight:400 !important;
+}
+.listing-link{
+    text-decoration: none;
+}
+/* card effect */
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white; 
+}
+
+/* new form style {mostly done using bootstrap */
+.add-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+/* edit style */
+.edit-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+/* show single listing style */
+.show-img{
+    height: 30vh;
+}
+.btns{
+    display: flex;
+}
+.show-card{
+    padding-left: 0;
+    padding-right:0 ;
+}
+
+/* .checked{
+    color: orange;
+} */
+
+/* map styling */
+#map{ 
+    height: 400px;
+    width: 80vh;
+ }
+
+
+.session{
+    color: white !important;
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* --- Sticky Footer Fix (for container-fluid layout) --- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* full viewport height */
+}
+
+.container-fluid {
+  flex: 1; /* pushes footer down */
+}
+
+.f-info {
+  margin-top: auto; /* keeps footer at bottom when content is short */
+}
+
+/* --- Enhanced Image Preview (Polished Style) --- */
+
+.listing-image {
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 550px;   /* ✅ Slightly smaller, same as before */
+  height: auto;
+  cursor: zoom-in;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: block;
+  margin: 1.5rem auto;  /* ✅ Centers image nicely */
+}
+
+.listing-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+/* Modal Overlay */
+.image-preview-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Fading animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Modal image */
+.modal-content-preview {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  opacity: 0;
+  animation: zoomIn 0.3s ease forwards;
+  transition: transform 0.3s ease;
+  cursor: zoom-out;
+}
+
+/* Zoom effect when modal appears */
+@keyframes zoomIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Close button */
+.close-preview {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  color: #fff;
+  font-size: 42px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.close-preview:hover {
+  color: #fe424d;
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .modal-content-preview {
+    max-width: 95%;
+    max-height: 75vh;
+  }
+  .close-preview {
+    top: 10px;
+    right: 20px;
+    font-size: 32px;
+  }
+}
+
+/* ===== Enhanced Focus Animation for Inputs, Textareas & Search ===== */
+
+input.form-control,
+textarea.form-control,
+.search-input,
+input,
+textarea,select {
+  border: 1px solid #999 !important;
+  border-radius: 10px;
+  box-shadow: none;
+  transition: all 0.25s ease-in-out;
+}
+
+/* Remove default browser blue highlight */
+input:focus,
+textarea:focus,
+select:focus,
+button:focus ,
+select:focus{
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Focus animation */
+input:focus,
+textarea:focus,
+.search-input:focus,
+select:focus {
+  border-color: #fe424d !important;
+  box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.15); /* glowing coral ring */
+  transform: scale(1.015); /* slight zoom-in */
+  outline: none;
+  transition: all 0.25s ease-in-out;
+}
+
+/* Return to normal when blurred */
+input,
+textarea,
+select {
+  transform: scale(1);
+}
+
+/* Placeholder color */
+::placeholder {
+  color: #777 !important;
+  opacity: 1;
+}
+
+/* HR visibility */
+hr {
+  all: unset; /* remove ALL Bootstrap and browser defaults */
+  display: block;
+  opacity: 0.9;
+  width: 100%;
+  height: 1px; /* make it slightly thicker */
+  background-color: #666 !important; 
+  margin: 1.5rem 0 !important;
+  border-radius: 1px;
+}
+
+
+/* Optional: make <input type="search"> match the rounded style */
+input[type="search"] {
+  border-radius: 25px !important;
+  padding: 0.5rem 1.25rem !important;
+  transition: all 0.25s ease-in-out;
+}
+
+/* Optional: textarea match aesthetic */
+textarea {
+  resize: vertical;
+  border-radius: 8px;
+}
+
+/* 🌸 Custom styled dropdown for category */
+.styled-select {
+  max-width: 300px;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  border: 1.5px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 0.95rem;
+  appearance: none;              /* removes default OS arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fe424d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14l-4.796-5.481c-.566-.647-.106-1.659.753-1.659h9.592c.86 0 1.32 1.012.753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px 16px;
+  transition: all 0.25s ease;
+}
+
+.styled-select:focus {
+  outline: none;
+  border-color: #fe424d;
+  box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.2);
+}
+
+.styled-select:hover {
+  border-color: #fe424d;
+}
+
+.styled-select option {
+  background-color: #fff;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Optional: compact style for mobile */
+@media (max-width: 576px) {
+  .styled-select {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+label[for="category"] {
+  margin-bottom: 0.2rem;
+}
