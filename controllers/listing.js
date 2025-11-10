@@ -64,8 +64,8 @@ module.exports.showListing = async (req,res)=>{
         req.flash("error","listing you requested for does not Exist!");
         res.redirect("/listings");
     }else{
-        res.render("listings/show.ejs",{listing});
-    }
+        res.render("listings/show.ejs",{listing,mapToken: process.env.MAPBOX_TOKEN});
+    } //taken from gpt
 };
 
 module.exports.createListing = async (req,res,next)=>{  // let{title,description,image,price,country,location} = req.body;

@@ -391,3 +391,447 @@ hr {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
+
+
+/* === MOBILE VIEW FIX: Prevent Zoom-Out === */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+.filters-wrapper,
+#filters,
+.container-fluid {
+  max-width: 98vw;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+/* Ensure horizontal scroll stays inside the wrapper only */
+#filters {
+  margin: 0;
+  padding-right: 1rem;
+  flex-shrink: 1;
+}
+
+/* On small screens: prevent flex items from stretching */
+@media (max-width: 768px) {
+  .filters-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  #filters {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .filter {
+    flex: 0 0 auto;
+  }
+}
+
+/* === RESTORE CUSTOM BUTTON STYLES === */
+
+/* 🌸 'Clear Filters' top button */
+.btn-filter-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fe424d !important;
+  border: 1.5px solid #fe424d !important;
+  border-radius: 20px !important;
+  padding: 0.25rem 0.8rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  background-color: transparent !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-filter-top:hover {
+  color: white !important;
+  background-color: #fe424d !important;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(254, 66, 77, 0.25);
+}
+
+.btn-filter-top:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ✅ 'Clear Filters and Try Again' button */
+.no-results a.btn-outline-dark {
+  border-color: #222 !important;
+  color: #222 !important;
+  border-radius: 30px !important;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+}
+
+.no-results a.btn-outline-dark:hover {
+  background-color: #fe424d !important;
+  color: white !important;
+  border-color: #fe424d !important;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(254, 66, 77, 0.25);
+}
+
+/* === RESPONSIVE LISTING WIDTH ADJUSTMENTS === */
+
+/* Medium devices (tablets and below) */
+@media (max-width: 768px) {
+  .listing-card {
+    width: 95% !important;       /* slightly narrower */
+    max-width: none !important;
+    margin: 0.8rem auto !important;
+    padding: 0.8rem !important;
+  }
+
+  .card-img-top {
+    border-radius: 14px !important;
+    height: auto !important;
+  }
+}
+
+/* Small screens (phones) */
+@media (max-width: 576px) {
+  .listing-card {
+    width: 98% !important;           /* slightly wider than before */
+    max-width: 96% !important;
+    margin: 0.5rem auto !important;  /* small side margin */
+    padding: 0.75rem !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 14px !important;
+  }
+
+  .card-img-top {
+    width: 100% !important;
+    height: 15rem !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+  }
+
+  .listing-link {
+    display: block;
+    width: 100%;
+  }
+
+  .card-body {
+    padding-top: 0.75rem !important;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 14rem !important;
+    object-fit: cover !important;
+  }
+}
+
+/* === FIX: Add visible spacing between filter bar and tax switch === */
+.filters-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+/* Ensure the scrollable filters take the available space */
+#filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1.8rem;
+  padding: 0.8rem 1.5rem;
+  max-width: 1400px;
+  width: 100%;
+  scrollbar-width: none;
+}
+
+#filters::-webkit-scrollbar {
+  display: none;
+}
+
+/* Add spacing between the end of filters and the tax switch */
+.tax-toggle {
+  border: 1px solid black;
+  border-radius: 1rem;
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  margin-left: 1.5rem;   /* ← this is the visible gap */
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Make sure on small screens it looks natural */
+@media (max-width: 768px) {
+  .tax-toggle {
+    margin-left: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    background-color: #ffffffcc;
+    backdrop-filter: blur(10px);
+  }
+
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 2000;
+    transition: top 0.25s ease-in-out;
+  }
+
+  /* ✅ Fix: When scrolled down and toggled, keep navbar pinned and overlay menu at viewport top */
+  .navbar.fixed-menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    z-index: 1100;
+  }
+
+  .navbar.fixed-menu .navbar-collapse {
+    top: 4.8rem; /* keeps menu just below navbar */
+  }
+
+  .navbar.fixed-menu .navbar-collapse.show {
+    animation: slideDown 0.3s ease forwards;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
+
+/* === NAVBAR (universal sticky behavior) === */
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1050;
+  background-color: #ffffffcc; /* slightly translucent white */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* === Mobile dropdown fix === */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%; /* directly under navbar */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 2000;
+    transition: all 0.3s ease;
+  }
+
+  /* ✅ Keep navbar pinned when dropdown opens mid-scroll */
+  .navbar.fixed-menu {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+  }
+
+  .navbar.fixed-menu .navbar-collapse {
+    position: fixed;
+    top: 4.8rem; /* dropdown stays right under navbar */
+  }
+
+  .navbar.fixed-menu .navbar-collapse.show {
+    animation: slideDown 0.25s ease forwards;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* Ensure sticky works correctly */
+html, body {
+  overflow-x: hidden;
+  height: auto;
+}
+
+.main-content {
+  position: relative;
+  overflow: visible !important; /* ✅ CRITICAL: prevents breaking sticky */
+  z-index: 1;
+}
+
+/* Push content down to avoid hiding behind fixed navbar */
+body {
+  padding-top: 5rem; /* match your navbar height */
+}
+
+/* If your navbar is taller, tweak this */
+@media (max-width: 768px) {
+  body {
+    padding-top: 4.8rem;
+  }
+}
+
+.filters-wrapper {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ---------- NAVBAR: force fixed + content offset ---------- */
+/* set navbar height variable so it's easy to tweak if you change navbar size */
+:root { --nav-h: 5rem; } /* change value if your navbar is taller/shorter */
+
+/* Ensure navbar is fixed on top (override Bootstrap if needed) */
+.navbar,
+.navbar.fixed-top {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  z-index: 1050; /* above most content */
+  background-color: rgba(255,255,255,0.95); /* keeps original look */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* Push page content down so filters/listings aren't hidden under the fixed navbar */
+body {
+  padding-top: calc(var(--nav-h) + 0.5rem) !important;
+}
+
+/* If you had inline style on body (padding-top), this !important will override it.
+   Adjust +0.5rem as needed so filters don't touch the navbar. */
+
+/* ---------- MOBILE: make collapse panel appear under the fixed navbar ---------- */
+@media (max-width: 768px) {
+  /* target the collapse (Bootstrap .navbar-collapse) used for the mobile dropdown */
+  #mainNavCollapse,
+  .navbar-collapse {
+    position: fixed !important;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1045; /* slightly below navbar so navbar stays on top */
+    background: white;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform-origin: top center;
+  }
+
+  /* keep the collapse visually smooth */
+  .navbar-collapse.collapsing {
+    transition: transform .18s ease, opacity .18s ease;
+    transform: translateY(-6px);
+    opacity: 0;
+  }
+  .navbar-collapse.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------- Filters wrapper: ensure it's below navbar and fades don't overlap tax toggle ---------- */
+.filters-container, .filters-wrapper {
+  position: relative;
+  z-index: 10;
+  margin-top: 0.25rem;
+}
+
+/* If tax toggle is outside the scroll area (desktop), reduce filters max-width so the fade ends before tax switch */
+@media (min-width: 992px) {
+  #filters {
+    max-width: 100%;
+  }
+}
+
+
+/* Keep left/right fades working and not covering the tax toggle */
+.filters-wrapper::after,
+.filters-wrapper::before { pointer-events: none; z-index: 11; }
+
+/* ---------- Small screens: reduce listing width a touch so page doesn't auto-zoom in some devices ---------- */
+@media (max-width: 420px) {
+  .card.listing-card, .listing-card {
+    max-width: calc(100% - 2.5rem) !important;
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
+}
+
+
+/* === Make listing cards slightly wider on mobile === */
+@media (max-width: 576px) {
+  /* Reduce Bootstrap's built-in column padding (gutters) */
+  .row.row-cols-lg-3.row-cols-md-2.row-cols-1 > * {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  /* Slightly widen the card within the column */
+  .listing-card {
+    width: 98% !important;
+    margin: 0.5rem auto !important;
+  }
+
+  /* Optional: Keep nice proportional image size */
+  .listing-card .card-img-top {
+    height: 15rem !important;
+    object-fit: cover !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #mainNavCollapse {
+    transition: all 0.3s ease-in-out;
+  }
+
+  #mainNavCollapse.overlay-mode {
+    background-color: white;
+  }
+}
+
+#mainNavCollapse.overlay-mode {
+  transform: translateY(-10px);
+  opacity: 0;
+  animation: dropdownFade 0.25s ease forwards;
+}
+
+@keyframes dropdownFade {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
