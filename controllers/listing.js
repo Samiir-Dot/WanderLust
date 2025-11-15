@@ -59,7 +59,7 @@ module.exports.showListing = async (req,res)=>{
         },
     })
     .populate("owner");
-    console.log(listing);
+    // console.log(listing);
     if(!listing){
         req.flash("error","listing you requested for does not Exist!");
         res.redirect("/listings");

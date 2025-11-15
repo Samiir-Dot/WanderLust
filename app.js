@@ -25,6 +25,11 @@ app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, "public")));
+app.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
+  next();
+});
+
 app.use(methodOverride('_method'));
 app.engine("ejs",ejsMate);
 
@@ -67,6 +72,16 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash()); //should be written before the routers
+
+// FIX: Ensure session is saved before redirect
+app.use((req, res, next) => {
+    const redirect = res.redirect;
+    res.redirect = function (...args) {
+        req.session.save(() => redirect.apply(res, args));
+    };
+    next();
+});
+
 
 app.use(passport.initialize());
 app.use(passport.session());

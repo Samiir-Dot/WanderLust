@@ -13,7 +13,7 @@
     align-items: center;
     background-color: white;
     width: 100%;
-    margin-top: 0.5rem;
+    /* margin-top: 0.5rem; */
     position: relative;
   }
 
@@ -248,7 +248,7 @@
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
     <% for (list of allListings) { %>
       <a href="/listings/<%= list._id %>" class="listing-link">
-        <div class="card col listing-card">
+        <div class="card col listing-card index-card">
           <img src="<%= list.image.url %>" class="card-img-top" alt="listing_image" style="height:20rem">
           <div class="card-img-overlay"></div>
           <div class="card-body">

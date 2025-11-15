@@ -15,16 +15,15 @@
       <!-- Listing Card -->
       <div class="card show-card listing-card mx-auto">
         <div class="listing-image-container text-center">
-          <img src="<%= listing.image.url %>" class="listing-image" alt="image" id="mainListingImage">
+          <img src="<%= listing.image.url %>" class="listing-image" alt="image" id="previewSource">
           <p class="text-muted mt-2">Owned by <em><%= listing.owner.username %></em></p>
           <hr>
 
-          <!-- 🖼️ Lightbox Preview Modal -->
-          <div id="imagePreviewModal" class="image-preview-modal">
-            <span class="close-preview">&times;</span>
-            <img class="modal-content-preview" id="previewedImage">
+          <div id="imageModal" class="image-modal">
+            <span id="closePreview" class="close-btn">&times;</span>
+            <img id="modalImage" class="modal-image">
           </div>
-        </div>
+        </div> 
 
         <!-- Card Body -->
         <div class="card-body text-start">
@@ -112,35 +111,50 @@
 
 <!-- JS: Image Preview Modal -->
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const modal = document.getElementById("imagePreviewModal");
-    const img = document.getElementById("mainListingImage");
-    const modalImg = document.getElementById("previewedImage");
-    const closeBtn = document.querySelector(".close-preview");
+document.addEventListener("DOMContentLoaded", () => {
+    const img = document.getElementById("previewSource");
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const closeBtn = document.getElementById("closePreview");
 
-    if (!img || !modal) return;
-
-    img.addEventListener("click", () => {
-      modal.style.display = "flex";
-      modalImg.src = img.src;
-    });
-
-    function closeModal() {
-      modal.classList.add("fade-out");
-      setTimeout(() => {
-        modal.style.display = "none";
-        modal.classList.remove("fade-out");
-      }, 200);
+    if (!img || !modal) {
+        console.warn("Modal elements missing");
+        return;
     }
 
-    closeBtn.addEventListener("click", closeModal);
+    // ---- OPEN MODAL ----
+    img.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        modal.classList.add("show");
+        modalImg.src = img.src;
+
+        // ENABLE interaction
+        modal.style.pointerEvents = "auto";
+
+        document.body.style.overflow = "hidden";
+    });
+
+    // ---- CLOSE WHEN CLICKING BACKDROP ----
     modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeModal();
+        if (e.target === modal) {
+            modal.classList.remove("show");
+            document.body.style.overflow = "auto";
+        }
     });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeModal();
+
+    // ---- PREVENT closing when clicking the image ----
+    modalImg.addEventListener("click", (e) => {
+        e.stopPropagation();
     });
-  });
+
+    // ---- CLOSE BUTTON ----
+    closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        modal.classList.remove("show");
+        document.body.style.overflow = "auto";
+    });
+});
 </script>
 
 <!-- Mapbox Script -->

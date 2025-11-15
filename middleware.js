@@ -5,7 +5,6 @@ const ExpError = require('./utils/ExpError.js');
 const { listingSchema,reviewSchema } = require('./schema.js');
 
 module.exports.isLoggedIn = (req,res,next) => {
-    console.log(req);
     if(!req.isAuthenticated()){
         req.session.redirectUrl = req.originalUrl;
         req.flash("error","you must be logged in to move further!");

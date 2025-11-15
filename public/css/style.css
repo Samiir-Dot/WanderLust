@@ -1,177 +1,264 @@
-/* ===== Global Layout ===== */
-body {
-  font-family: "Plus Jakarta Sans", sans-serif !important;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 0 !important;
+/* ===========================
+   Cleaned style.css (Option B)
+   - Duplicates removed
+   - Conflicts resolved
+   - Structure organized
+   =========================== */
+
+/* ---------------------------
+   Variables / Base settings
+   --------------------------- */
+:root{
+  --brand: #fe424d;
+  --muted: #666;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  --glass-bg: rgba(255,255,255,0.95);
+  --nav-h: 5rem;
+  --container-max: 1200px;
+  --rounded-lg: 14px;
 }
 
+/* Reset-ish */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  color: #222;
+  background: #fff;
+}
+
+/* ---------------------------
+   Layout containers
+   --------------------------- */
 .container {
   flex: 1;
-  margin: 0 auto !important;
+  margin: 0 auto;
   padding: 0 1rem;
-  max-width: 1200px;
+  max-width: var(--container-max);
 }
 
 .container-fluid {
-  max-width: 100%;
+  width: 100%;
   padding: 0 2rem;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/* ===== Navbar ===== */
+/* Keep page content below navbar */
+body { padding-top: calc(var(--nav-h) + 0.5rem); }
+
+/* ---------------------------
+   Navbar (single consolidated block)
+   --------------------------- */
 .navbar {
-  height: 5rem;
-  background-color: white;
-  border: 1px solid #999;
-}
-.fa-compass {
-  color: #fe424d;
-  font-size: 2rem;
-}
-.nav-link {
-  color: black !important;
+  height: var(--nav-h);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  background-color: rgba(255,255,255,0.95);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }
 
-/* ===== Footer ===== */
-.f-info {
-  display: flex;
-  height: 6rem;
-  flex-direction: column;
-  justify-content: center;
+.navbar .navbar-brand .fa-compass,
+.fa-compass { color: var(--brand); font-size: 2rem; }
+
+.nav-link { color: #000 !important; }
+
+/* mobile collapse panel */
+.navbar-collapse {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* mobile: make collapse panel appear under fixed navbar */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    position: fixed !important;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1045;
+    background: white;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform-origin: top center;
+  }
+  .navbar-collapse.collapsing {
+    transition: transform .18s ease, opacity .18s ease;
+    transform: translateY(-6px);
+    opacity: 0;
+  }
+  .navbar-collapse.show { transform: translateY(0); opacity: 1; }
+}
+
+/* ---------------------------
+   Search button / inputs
+   --------------------------- */
+.search-bar { gap: 0.5rem; display:flex; align-items:center; }
+.search-input {
+  border-radius: 25px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  flex: 1;
+  border: 1px solid #ddd;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  background: #fff;
+}
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(254,66,77,0.12);
+  border-color: var(--brand);
+}
+.search-btn {
+  display: inline-flex;
   align-items: center;
-  background-color: #ebebeb;
-  margin-top: auto;
+  justify-content: center;
+  gap: 0.4rem;
+  color: white;
+  background-color: var(--brand);
+  border-radius: 25px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  border: none;
+  white-space: nowrap;
+  transition: transform .15s ease, background .12s ease;
 }
-.f-info-links a {
-  text-decoration: none;
-  color: #222;
-}
-.f-info-links a:hover {
-  text-decoration: underline;
-}
-.f-info-socials i {
-  margin-right: 1rem;
-}
+.search-btn:hover { background-color: #ff5b67; transform: translateY(-1px); }
 
-/* ===== Card Styles ===== */
+/* ---------------------------
+   Listing card / show page
+   --------------------------- */
 .listing-card {
-  border: none !important;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: 0 auto 2rem;
+  border: none;
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--card-shadow);
   padding: 1rem;
-  /* padding-top: 0; */
+  margin: 0 auto 2rem;
+  max-width: 600px;
+  background: #fff;
+  transition: transform .18s ease, box-shadow .18s ease;
 }
-.card-body {
-  padding: 0 !important;
-}
-.card-text {
-  font-weight: 400 !important;
-}
-.listing-link {
-  text-decoration: none;
-}
+.listing-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+
+.card-body { padding: 0 !important; }
+.card-text { font-weight: 400 !important; color: #222; }
+
+/* clickable listing link styling */
+.listing-link { text-decoration: none; color: inherit; }
+
+/* card top image */
 .card-img-top {
-  border-radius: 1rem !important;
+  border-radius: 12px !important;
   width: 100% !important;
   object-fit: cover !important;
 }
-.card-img-overlay {
-  opacity: 0;
-}
-.card-img-overlay:hover {
-  opacity: 0.2;
-  background-color: white;
-}
 
-/* ===== Buttons ===== */
-.add-btn,
-.edit-btn {
-  background-color: #fe424d !important;
-  border: none !important;
-  padding: 6px 2rem !important;
-  margin-right: 8px;
-}
-
-.btns {
-  display: flex;
-  justify-content: flex-start;
-  gap: 0.75rem;
-}
-.session {
-  color: white !important;
-  background-color: #fe424d !important;
-  border: none !important;
-}
-
-/* ===== Sticky Footer Fix ===== */
-.container-fluid {
-  flex: 1;
-}
-
-/* ===== Listing Image & Modal ===== */
+/* show page: image */
 .listing-image {
   border-radius: 1rem;
   width: 100%;
   max-width: 600px;
   height: auto;
   display: block;
-  /* margin: 1.5rem auto; */
   object-fit: cover;
   cursor: zoom-in;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.listing-image:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-.listing-image-container {
-  text-align: center;
-  margin-bottom: 1rem;
+
+.listing-image-container { text-align: center; margin-bottom: 1rem; }
+
+/* ===== SHOW PAGE: HOVER EFFECT ON IMAGE ===== */
+.listing-image {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: zoom-in !important;
+  will-change: transform;
 }
 
-/* ===== Image Preview Modal ===== */
-.image-preview-modal {
+.listing-image:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+
+/* ===== FULLSCREEN MODAL ===== */
+.image-modal {
   display: none;
-  position: fixed;
-  z-index: 1050;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.85);
   justify-content: center;
   align-items: center;
-  overflow: auto;
-}
-.modal-content-preview {
-  max-width: 90%;
-  max-height: 80vh;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  cursor: zoom-out;
-}
-.close-preview {
-  position: absolute;
-  top: 20px;
-  right: 35px;
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.close-preview:hover {
-  color: #fe424d;
-}
-.fade-out {
-  animation: fadeOut 0.2s ease-out forwards;
-}
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+
+  /* Not full black — Airbnb style */
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
-/* ===== Map ===== */
+.image-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+/* Image animation */
+.modal-image {
+  max-width: 92%;
+  max-height: 85vh;
+  border-radius: 12px;
+  object-fit: contain;
+
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+
+  /* scale in animation */
+  transform: scale(0.95);
+  transition: transform 0.25s ease;
+}
+
+.image-modal.show .modal-image {
+  transform: scale(1);
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  z-index: 6000;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #fe424d;
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.listing-card .card { margin-bottom: 1rem; }
+
+
 #map {
   width: 100%;
   max-width: 600px;
@@ -179,48 +266,30 @@ body {
   border-radius: 10px;
   margin: 1rem auto;
 }
-@media (min-width: 768px) {
-  #map { height: 400px; }
-}
-@media (min-width: 1200px) {
-  #map { height: 450px; }
-}
+@media (min-width: 768px) { #map { height: 400px; } }
+@media (min-width: 1200px) { #map { height: 450px; } }
 
-/* ===== Forms, Inputs, and Select ===== */
+
 input.form-control,
 textarea.form-control,
 .search-input,
-input,
-textarea,
-select {
-  border: 1px solid #999 !important;
+input, textarea, select {
+  border: 1px solid #999;
   border-radius: 25px;
   box-shadow: none;
-  transition: all 0.25s ease-in-out;
+  transition: all .22s ease-in-out;
 }
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: #fe424d !important;
-  box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.15);
-  transform: scale(1.015);
+input:focus, textarea:focus, select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(254,66,77,0.12);
   outline: none;
+  transform: scale(1.015);
 }
-input,
-textarea,
-select {
-  transform: scale(1);
-}
-::placeholder {
-  color: #777 !important;
-  opacity: 1;
-}
-textarea {
-  resize: vertical;
-  border-radius: 8px;
-}
+::placeholder { color: #777; opacity: 1; }
 
-/* ===== Dropdown Styling ===== */
+textarea { resize: vertical; border-radius: 8px; }
+
+/* styled select (category) */
 .styled-select {
   max-width: 300px;
   border-radius: 25px;
@@ -234,305 +303,14 @@ textarea {
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 16px 16px;
-  transition: all 0.25s ease;
 }
-.styled-select:focus {
-  outline: none;
-  border-color: #fe424d;
-  box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.2);
-}
-.styled-select:hover {
-  border-color: #fe424d;
-}
-.styled-select option {
-  background-color: #fff;
-  color: #333;
-  font-size: 0.95rem;
-}
-@media (max-width: 576px) {
-  .styled-select {
-    width: 100%;
-    max-width: none;
-  }
-}
+.styled-select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(254,66,77,0.12); }
+.styled-select:hover { border-color: var(--brand); }
+@media (max-width: 576px) { .styled-select { width: 100%; max-width: none; } }
 
-/* ===== HR (Unified) ===== */
-hr {
-  border: 0;
-  border-top: 1px solid #666;
-  margin: 1.5rem 0 !important;
-  opacity: 0.9;
-  width: 100%;
-}
-
-
-/* Outer wrapper controls the scroll hint */
-.filters-wrapper {
-  position: relative;
-  overflow: hidden;
-  margin: 0 auto;
-}
-
-/* The actual scrollable filter bar */
-#filters {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  padding: 0.75rem 1rem;
-}
-
-/* Hide scrollbar but keep touch-scroll */
-#filters::-webkit-scrollbar {
-  display: none;
-}
-
-/* Individual filter item (already styled but you can enhance) */
-.filter {
-  flex: 0 0 auto;
-  text-align: center;
-  color: #333;
-  text-decoration: none;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.filter:hover,
-.active-filter {
-  border-color: #fe424d;
-  color: #fe424d;
-}
-
-.filters-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 100%;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.95), transparent);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-
-/* Optional — left-side fade when scrolled right */
-.filters-wrapper::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 50px;
-  height: 100%;
-  background: linear-gradient(to right, rgba(249, 249, 249, 0.95), transparent);
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  opacity: var(--left-fade-opacity, 0);
-}
-
-
-/* Soft right-side fade only */
-.filters-wrapper::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 50px;
-  height: 100%;
-  background: linear-gradient(to left, rgba(249, 249, 249, 0.95), transparent);
-   pointer-events: none;
-  transition: opacity 0.3s ease;
-  opacity: var(--scroll-indicator-opacity, 1);
-}
-
-.filters-wrapper::before { z-index: 1; }
-.filters-wrapper::after { z-index: 2; }
-
-.navbar {
-  height: 4.8rem;
-  background-color: #ffffffcc; /* slightly translucent white */
-  backdrop-filter: blur(10px); /* soft glass effect */
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1050; /* higher than your cards, footer, etc. */
-}
-
-
-.navbar-collapse {
-  max-height: 80vh;   /* limits height */
-  overflow-y: auto;   /* scrollable if many links */
-}
-
-
-.listing-card {
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.listing-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
-
-
-/* === MOBILE VIEW FIX: Prevent Zoom-Out === */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden !important;
-}
-
-.filters-wrapper,
-#filters,
-.container-fluid {
-  max-width: 98vw;
-  box-sizing: border-box;
-  overflow-x: auto;
-}
-
-/* Ensure horizontal scroll stays inside the wrapper only */
-#filters {
-  margin: 0;
-  padding-right: 1rem;
-  flex-shrink: 1;
-}
-
-/* On small screens: prevent flex items from stretching */
-@media (max-width: 768px) {
-  .filters-wrapper {
-    overflow-x: hidden;
-    width: 100%;
-  }
-
-  #filters {
-    overflow-x: auto;
-    width: 100%;
-  }
-
-  .filter {
-    flex: 0 0 auto;
-  }
-}
-
-/* === RESTORE CUSTOM BUTTON STYLES === */
-
-/* 🌸 'Clear Filters' top button */
-.btn-filter-top {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #fe424d !important;
-  border: 1.5px solid #fe424d !important;
-  border-radius: 20px !important;
-  padding: 0.25rem 0.8rem !important;
-  font-size: 0.85rem !important;
-  font-weight: 500 !important;
-  background-color: transparent !important;
-  text-decoration: none !important;
-  transition: all 0.2s ease-in-out;
-}
-
-.btn-filter-top:hover {
-  color: white !important;
-  background-color: #fe424d !important;
-  transform: translateY(-1px);
-  box-shadow: 0 3px 6px rgba(254, 66, 77, 0.25);
-}
-
-.btn-filter-top:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/* ✅ 'Clear Filters and Try Again' button */
-.no-results a.btn-outline-dark {
-  border-color: #222 !important;
-  color: #222 !important;
-  border-radius: 30px !important;
-  padding: 0.6rem 1.5rem !important;
-  font-weight: 500;
-  transition: all 0.25s ease-in-out;
-}
-
-.no-results a.btn-outline-dark:hover {
-  background-color: #fe424d !important;
-  color: white !important;
-  border-color: #fe424d !important;
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(254, 66, 77, 0.25);
-}
-
-/* === RESPONSIVE LISTING WIDTH ADJUSTMENTS === */
-
-/* Medium devices (tablets and below) */
-@media (max-width: 768px) {
-  .listing-card {
-    width: 95% !important;       /* slightly narrower */
-    max-width: none !important;
-    margin: 0.8rem auto !important;
-    padding: 0.8rem !important;
-  }
-
-  .card-img-top {
-    border-radius: 14px !important;
-    height: auto !important;
-  }
-}
-
-/* Small screens (phones) */
-@media (max-width: 576px) {
-  .listing-card {
-    width: 98% !important;           /* slightly wider than before */
-    max-width: 96% !important;
-    margin: 0.5rem auto !important;  /* small side margin */
-    padding: 0.75rem !important;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-    border-radius: 14px !important;
-  }
-
-  .card-img-top {
-    width: 100% !important;
-    height: 15rem !important;
-    object-fit: cover !important;
-    border-radius: 12px !important;
-  }
-
-  .listing-link {
-    display: block;
-    width: 100%;
-  }
-
-  .card-body {
-    padding-top: 0.75rem !important;
-  }
-}
-
-
-@media (max-width: 576px) {
-  .card-img-top {
-    height: 14rem !important;
-    object-fit: cover !important;
-  }
-}
-
-/* === FIX: Add visible spacing between filter bar and tax switch === */
+/* ---------------------------
+   Filters horizontal bar
+   --------------------------- */
 .filters-wrapper {
   width: 100%;
   display: flex;
@@ -541,9 +319,9 @@ html, body {
   background-color: white;
   margin-top: 0.5rem;
   position: relative;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
-
-/* Ensure the scrollable filters take the available space */
 #filters {
   display: flex;
   align-items: center;
@@ -557,18 +335,32 @@ html, body {
   width: 100%;
   scrollbar-width: none;
 }
+#filters::-webkit-scrollbar { display: none; }
 
-#filters::-webkit-scrollbar {
-  display: none;
+.filter {
+  flex: 0 0 auto;
+  text-align: center;
+  color: #333;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  transition: all 0.18s ease-in-out;
+}
+.filter:hover, .active-filter {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 
-/* Add spacing between the end of filters and the tax switch */
+/* tax toggle area (only shown when listings exist; server-side EJS controls visibility) */
 .tax-toggle {
-  border: 1px solid black;
+  border: 1px solid #000;
   border-radius: 1rem;
   height: 3rem;
   padding: 0.5rem 1rem;
-  margin-left: 1.5rem;   /* ← this is the visible gap */
+  margin-left: 1.5rem;
   flex-shrink: 0;
   white-space: nowrap;
   display: flex;
@@ -576,262 +368,315 @@ html, body {
   justify-content: center;
 }
 
-/* Make sure on small screens it looks natural */
-@media (max-width: 768px) {
-  .tax-toggle {
-    margin-left: 0.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1050;
-    background-color: #ffffffcc;
-    backdrop-filter: blur(10px);
-  }
-
-  .navbar-collapse {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    z-index: 2000;
-    transition: top 0.25s ease-in-out;
-  }
-
-  /* ✅ Fix: When scrolled down and toggled, keep navbar pinned and overlay menu at viewport top */
-  .navbar.fixed-menu {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    left: 0;
-    z-index: 1100;
-  }
-
-  .navbar.fixed-menu .navbar-collapse {
-    top: 4.8rem; /* keeps menu just below navbar */
-  }
-
-  .navbar.fixed-menu .navbar-collapse.show {
-    animation: slideDown 0.3s ease forwards;
-  }
-
-  @keyframes slideDown {
-    from { transform: translateY(-10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-}
-
-
-/* === NAVBAR (universal sticky behavior) === */
-.navbar {
-  position: sticky;
+/* small fade edges for filters — subtle */
+.filters-wrapper::before,
+.filters-wrapper::after {
+  content: "";
+  position: absolute;
   top: 0;
+  height: 100%;
+  width: 50px;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.filters-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(249,249,249,0.95), transparent);
+  opacity: 0; /* will be optionally toggled with JS */
+  z-index: 1;
+}
+.filters-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(249,249,249,0.95), transparent);
+  opacity: 1;
+  z-index: 2;
+}
+
+.btn-filter-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+  border: 1.5px solid var(--brand);
+  border-radius: 20px;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background-color: transparent;
+  text-decoration: none;
+  transition: all .18s ease;
+}
+.btn-filter-top:hover { color: #fff; background-color: var(--brand); transform: translateY(-1px); box-shadow: 0 3px 6px rgba(254,66,77,0.2); }
+
+/* primary 'Clear Filters' in no-results card */
+.no-results a.btn-outline-dark {
+  border-color: #222;
+  color: #222;
+  border-radius: 30px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  transition: all .25s ease;
+}
+.no-results a.btn-outline-dark:hover { background-color: var(--brand); color: #fff; border-color: var(--brand); transform: translateY(-2px); box-shadow: 0 3px 6px rgba(254,66,77,0.25); }
+
+
+hr {
+  border: 0;
+  border-top: 1px solid #666;
+  margin: 1.5rem 0;
+  opacity: 0.9;
   width: 100%;
-  z-index: 1050;
-  background-color: #ffffffcc; /* slightly translucent white */
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* === Mobile dropdown fix === */
+.f-info {
+  display: flex;
+  height: 6rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ebebeb;
+  margin-top: auto;
+  padding: 1rem 0;
+}
+.f-info-links a { text-decoration: none; color: #222; }
+.f-info-links a:hover { text-decoration: underline; }
+.f-info-socials i { margin-right: 1rem; }
+
+/* footer glass variant */
+.footer-glass {
+  margin-top: auto;
+  padding: 10px 0 6px;
+  background: rgba(255,255,255,0.60);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 -8px 28px rgba(0,0,0,0.12);
+  border-radius: 18px 18px 0 0;
+}
+
+
 @media (max-width: 768px) {
-  .navbar-collapse {
-    position: absolute;
-    top: 100%; /* directly under navbar */
-    left: 0;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 2000;
-    transition: all 0.3s ease;
-  }
-
-  /* ✅ Keep navbar pinned when dropdown opens mid-scroll */
-  .navbar.fixed-menu {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1100;
-  }
-
-  .navbar.fixed-menu .navbar-collapse {
-    position: fixed;
-    top: 4.8rem; /* dropdown stays right under navbar */
-  }
-
-  .navbar.fixed-menu .navbar-collapse.show {
-    animation: slideDown 0.25s ease forwards;
-  }
-
-  @keyframes slideDown {
-    from { transform: translateY(-10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
+  .listing-card { width: 95% !important; margin: .8rem auto !important; padding: .8rem !important; }
+  .card-img-top { border-radius: 14px !important; height: auto !important; }
+  .filter { padding: 0.45rem .9rem; font-size: .88rem; }
+  .tax-toggle { margin-left: 0.8rem; }
+  body { padding-top: calc(var(--nav-h) - .2rem); }
 }
 
-/* Ensure sticky works correctly */
+@media (max-width: 576px) {
+  .listing-card { width: 98% !important; max-width: 96% !important; margin: .5rem auto !important; padding: .75rem !important; }
+  .card-img-top { height: 14rem !important; object-fit: cover !important; border-radius: 12px !important; }
+  .listing-image { max-width: 100%; height: auto; }
+  .filters-wrapper { overflow-x: hidden; }
+  .styled-select { width: 100%; max-width: none; }
+}
+
+.text-muted { color: #666; }
+.btn-danger.edit-btn, .add-btn { background-color: var(--brand) !important; border: none !important; padding: 6px 2rem !important; }
+.session { color: #fff !important; background-color: var(--brand) !important; border: none !important; }
+
+/* End of cleaned style.css */
+
+.image-modal {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.image-modal.show {
+  opacity: 1;
+}
+
+
 html, body {
-  overflow-x: hidden;
-  height: auto;
+    height: 100%;
+}
+
+.page-wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .main-content {
-  position: relative;
-  overflow: visible !important; /* ✅ CRITICAL: prevents breaking sticky */
-  z-index: 1;
+    flex: 1;
 }
 
-/* Push content down to avoid hiding behind fixed navbar */
-body {
-  padding-top: 5rem; /* match your navbar height */
-}
+.footer-glass {
+    margin-top: auto;
+    padding: 10px 0 6px;   /* ↓ reduced from 16/12 to 10/6 */
 
-/* If your navbar is taller, tweak this */
-@media (max-width: 768px) {
-  body {
-    padding-top: 4.8rem;
-  }
-}
+    background: rgba(255, 255, 255, 0.60);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 
-.filters-wrapper {
-  position: relative;
-  z-index: 10;
-  background-color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
 
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.12);
 
-/* ---------- NAVBAR: force fixed + content offset ---------- */
-/* set navbar height variable so it's easy to tweak if you change navbar size */
-:root { --nav-h: 5rem; } /* change value if your navbar is taller/shorter */
+    border-radius: 18px 18px 0 0;
 
-/* Ensure navbar is fixed on top (override Bootstrap if needed) */
-.navbar,
-.navbar.fixed-top {
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--nav-h);
-  z-index: 1050; /* above most content */
-  background-color: rgba(255,255,255,0.95); /* keeps original look */
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-}
-
-/* Push page content down so filters/listings aren't hidden under the fixed navbar */
-body {
-  padding-top: calc(var(--nav-h) + 0.5rem) !important;
-}
-
-/* If you had inline style on body (padding-top), this !important will override it.
-   Adjust +0.5rem as needed so filters don't touch the navbar. */
-
-/* ---------- MOBILE: make collapse panel appear under the fixed navbar ---------- */
-@media (max-width: 768px) {
-  /* target the collapse (Bootstrap .navbar-collapse) used for the mobile dropdown */
-  #mainNavCollapse,
-  .navbar-collapse {
-    position: fixed !important;
-    top: var(--nav-h);
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1045; /* slightly below navbar so navbar stays on top */
-    background: white;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-    transform-origin: top center;
-  }
-
-  /* keep the collapse visually smooth */
-  .navbar-collapse.collapsing {
-    transition: transform .18s ease, opacity .18s ease;
-    transform: translateY(-6px);
+    animation: fadeIn 0.65s ease forwards;
     opacity: 0;
-  }
-  .navbar-collapse.show {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* ---------- Filters wrapper: ensure it's below navbar and fades don't overlap tax toggle ---------- */
-.filters-container, .filters-wrapper {
-  position: relative;
-  z-index: 10;
-  margin-top: 0.25rem;
-}
-
-/* If tax toggle is outside the scroll area (desktop), reduce filters max-width so the fade ends before tax switch */
-@media (min-width: 992px) {
-  #filters {
-    max-width: 100%;
-  }
 }
 
 
-/* Keep left/right fades working and not covering the tax toggle */
-.filters-wrapper::after,
-.filters-wrapper::before { pointer-events: none; z-index: 11; }
-
-/* ---------- Small screens: reduce listing width a touch so page doesn't auto-zoom in some devices ---------- */
-@media (max-width: 420px) {
-  .card.listing-card, .listing-card {
-    max-width: calc(100% - 2.5rem) !important;
-    margin-left: 1rem !important;
-    margin-right: 1rem !important;
-  }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-
-/* === Make listing cards slightly wider on mobile === */
-@media (max-width: 576px) {
-  /* Reduce Bootstrap's built-in column padding (gutters) */
-  .row.row-cols-lg-3.row-cols-md-2.row-cols-1 > * {
-    padding-left: 6px !important;
-    padding-right: 6px !important;
-  }
-
-  /* Slightly widen the card within the column */
-  .listing-card {
-    width: 98% !important;
-    margin: 0.5rem auto !important;
-  }
-
-  /* Optional: Keep nice proportional image size */
-  .listing-card .card-img-top {
-    height: 15rem !important;
-    object-fit: cover !important;
-  }
+/* Layout */
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+/* Developer Link */
+.dev-link {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #222;
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s ease;
+}
+
+/* Animated underline */
+.dev-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -3px;
+    background: linear-gradient(to right, #000, #444);
+    transition: width 0.3s ease;
+}
+
+.dev-link:hover::after {
+    width: 100%;
+}
+
+.dev-link:hover {
+    color: #000;
+    transform: translateX(3px);
+}
+
+/* Social Icons */
+.footer-right a {
+    font-size: 1.35rem;
+    margin-left: 18px;
+    color: #444;
+    transition: all 0.3s ease;
+}
+
+.footer-right a:hover {
+    transform: translateY(-3px) scale(1.12);
+    color: #000;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Bottom section */
+.footer-bottom {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.footer-copy {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.footer-links {
+    margin-top: 4px;
+}
+
+.footer-links a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 6px;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.footer-links a:hover {
+    opacity: 0.75;
+}
+
+/* ❤ Made with love */
+.footer-love {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #555;
+    opacity: 0.8;
+}
+
+.footer-love span {
+    font-weight: 600;
+    color: #222;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  #mainNavCollapse {
-    transition: all 0.3s ease-in-out;
-  }
+    .footer-top {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-  #mainNavCollapse.overlay-mode {
-    background-color: white;
-  }
+    .footer-right a {
+        margin: 0 10px;
+    }
 }
 
-#mainNavCollapse.overlay-mode {
-  transform: translateY(-10px);
-  opacity: 0;
-  animation: dropdownFade 0.25s ease forwards;
+.listing-image-container,
+.show-card{
+  overflow: visible !important;
+  transform: none !important;
 }
 
-@keyframes dropdownFade {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* ==========================================
+   INDEX PAGE — CARD HOVER (image only)
+   ========================================== */
+
+/* Lift the card slightly */
+.index-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+  position: relative;
+  border-radius: 14px;
 }
+
+.index-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+}
+
+
+.index-card .card-img-top {
+  position: relative;
+  z-index: 1;
+  transition: transform .28s ease;
+}
+
+
+.index-card .card-img-top::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background .25s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* On hover → whitewash + zoom */
+.index-card:hover .card-img-top::after {
+  background: rgba(255,255,255,0.30);
+}
+
+.index-card:hover .card-img-top {
+  transform: scale(1.01);
+}
+
